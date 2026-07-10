@@ -217,7 +217,7 @@ pip install pyinstaller
 Then:
 
 ```bash
-pyinstaller --onefile --windowed --clean --optimize 2 pdf2up.py
+pyinstaller --onefile --windowed --clean --exclude-module matplotlib --exclude-module numpy --exclude-module pandas pdf2up.py
 ```
 
 The executable will be located in:

@@ -10,9 +10,9 @@ a = Analysis(
     hookspath=[],
     hooksconfig={},
     runtime_hooks=[],
-    excludes=[],
+    excludes=['matplotlib', 'numpy', 'pandas'],
     noarchive=False,
-    optimize=2,
+    optimize=0,
 )
 pyz = PYZ(a.pure)
 
@@ -21,7 +21,7 @@ exe = EXE(
     a.scripts,
     a.binaries,
     a.datas,
-    [('O', None, 'OPTION'), ('O', None, 'OPTION')],
+    [],
     name='pdf2up',
     debug=False,
     bootloader_ignore_signals=False,
