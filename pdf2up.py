@@ -28,20 +28,20 @@ def convert_pdf(input_file):
             page2 = None
             rect2 = rect1
 
-        width = rect1.width + rect2.width
+        width = 2*max(rect1.width,rect2.width)
         height = max(rect1.height, rect2.height)
 
         out = dst.new_page(width=width, height=height)
 
         out.show_pdf_page(
-            fitz.Rect(0, 0, rect1.width, rect1.height),
+            fitz.Rect(0, 0, width/2, rect1.height),
             src,
             i,
         )
 
         if page2:
             out.show_pdf_page(
-                fitz.Rect(rect1.width, 0, width, rect2.height),
+                fitz.Rect(width/2, 0, width, rect2.height),
                 src,
                 i + 1,
             )
