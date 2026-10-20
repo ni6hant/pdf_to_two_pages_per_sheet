@@ -21,6 +21,21 @@ def convert_pdf(input_file):
         page1 = src[i]
         rect1 = page1.rect
 
+        #TODO: If the page is of double width, skip combine and just copy the page as it is.abs
+        # While making sure that it should start at the even position and adding a blank page in the last page if needed
+        # We want thsi double page to pan across two pages and they can't be on different sheets.
+
+        if i>0: #Check from second page, skip first page for now.
+            #Check reverse not forward. Higher chance of a double page after the first page or at the end.
+            if rect1.width > int(1.5*src[i-1].rect.width): #if the current page is 1.5 times or larger than the last page:
+                out = dst.new_page(width=rect1.width,height=rect1.height)
+                out.show_pdf_page(
+                    fitz.Rect(0, 0, rect1.width, rect1.height),
+                    src,
+                    i,
+                )
+                continue
+
         if i + 1 < len(src):
             page2 = src[i + 1]
             rect2 = page2.rect
