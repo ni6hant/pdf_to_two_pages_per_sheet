@@ -18,11 +18,28 @@ def convert_pdf(input_file):
 
     for i in range(0, len(src), 2):
 
+        # if i>len(src)-3:
+        #     print("last page approaching")
+
         page1 = src[i]
         rect1 = page1.rect
 
-        page2 = src[i + 1]
-        rect2 = page2.rect
+        if i+1 == len(src): #The last page
+            page2 = None
+            rect2 = rect1
+            out = dst.new_page(width=2*rect1.width, height=rect1.height)
+
+            out.show_pdf_page(
+                fitz.Rect(0, 0, rect1.width, rect1.height),
+                src,
+                i
+            )
+            break
+        else:
+            page2 = src[i + 1]
+            rect2 = page2.rect
+
+
 
         # If the first page is double width
         if i>0: #Check from second page, skip first page for now.
@@ -70,9 +87,7 @@ def convert_pdf(input_file):
             )
             continue
         
-        if i+1 == len(src): #The last page
-            page2 = None
-            rect2 = rect1
+
 
         width = 2*max(rect1.width,rect2.width)
         height = max(rect1.height, rect2.height)
